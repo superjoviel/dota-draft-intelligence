@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101820">
+    <title>Dota Draft Intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Dota Draft Intelligence home">
+          <span class="brand-mark" aria-hidden="true">D</span>
+          <span>DOTA<span class="brand-light"> / INSIGHT</span></span>
+        </a>
+        <span class="privacy"><span class="privacy-dot"></span> Local analysis · Your data stays here</span>
+      </header>
+
+      <section class="intro">
+        <p class="eyebrow">PRE-MATCH ANALYSIS</p>
+        <h1>Read the draft.<br><span>Find the edge.</span></h1>
+        <p class="intro-copy">Estimate the matchup using your historical match data, team form, player history, and hero matchups.</p>
+      </section>
+
+      <section class="data-card" aria-labelledby="data-title">
+        <div class="data-copy">
+          <div class="data-icon" aria-hidden="true">↥</div>
+          <div>
+            <h2 id="data-title">Your match history</h2>
+            <p id="data-status">Import completed matches to power the estimate.</p>
+          </div>
+        </div>
+        <div class="data-actions">
+          <input id="history-file" class="visually-hidden" type="file" accept=".csv,text/csv">
+          <button class="button button-secondary" id="upload-button" type="button">Upload CSV</button>
+          <button class="text-button" id="template-button" type="button">Download CSV template</button>
+        </div>
+      </section>
+      <p class="data-error" id="data-error" role="alert" hidden></p>
+
+      <form id="draft-form" novalidate>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">THE MATCHUP</p>
+            <h2>Set the stage</h2>
+          </div>
+          <span class="format-note">Five players · Five heroes per side</span>
+        </div>
+
+        <div class="teams">
+          <section class="team-panel radiant" aria-labelledby="radiant-title">
+            <div class="team-heading">
+              <span class="side-icon" aria-hidden="true">R</span>
+              <div><p class="side-label">THE ANCIENTS</p><h3 id="radiant-title">Radiant</h3></div>
+            </div>
+            <label class="field-label" for="radiant-team">Team name</label>
+            <input id="radiant-team" name="radiant-team" autocomplete="off" placeholder="e.g. Team Spirit" required>
+            <label class="field-label" for="radiant-players">Players <span>separate with commas</span></label>
+            <input id="radiant-players" name="radiant-players" autocomplete="off" placeholder="Player 1, Player 2, Player 3, Player 4, Player 5" required>
+            <label class="field-label" for="radiant-heroes">Drafted heroes <span>separate with commas</span></label>
+            <input id="radiant-heroes" name="radiant-heroes" autocomplete="off" placeholder="Hero 1, Hero 2, Hero 3, Hero 4, Hero 5" required>
+          </section>
+
+          <div class="versus" aria-hidden="true">VS</div>
+
+          <section class="team-panel dire" aria-labelledby="dire-title">
+            <div class="team-heading">
+              <span class="side-icon" aria-hidden="true">D</span>
+              <div><p class="side-label">THE DIRE</p><h3 id="dire-title">Dire</h3></div>
+            </div>
+            <label class="field-label" for="dire-team">Team name</label>
+            <input id="dire-team" name="dire-team" autocomplete="off" placeholder="e.g. Gaimin Gladiators" required>
+            <label class="field-label" for="dire-players">Players <span>separate with commas</span></label>
+            <input id="dire-players" name="dire-players" autocomplete="off" placeholder="Player 1, Player 2, Player 3, Player 4, Player 5" required>
+            <label class="field-label" for="dire-heroes">Drafted heroes <span>separate with commas</span></label>
+            <input id="dire-heroes" name="dire-heroes" autocomplete="off" placeholder="Hero 1, Hero 2, Hero 3, Hero 4, Hero 5" required>
+          </section>
+        </div>
+
+        <div class="form-footer">
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+          <button id="predict-button" class="button button-primary" type="submit" disabled>Estimate outcome <span aria-hidden="true">→</span></button>
+        </div>
+      </form>
+
+      <section id="result" class="result-card" aria-live="polite" hidden>
+        <div class="result-heading">
+          <div><p class="eyebrow">MATCH OUTLOOK</p><h2>Estimated win chance</h2></div>
+          <span class="result-note">Statistical baseline · Not a guarantee</span>
+        </div>
+        <div class="probability-row">
+          <div class="probability-side radiant-text"><span id="result-radiant-name">Radiant</span><strong id="radiant-probability">50%</strong></div>
+          <div class="probability-track" role="img" aria-label="Estimated win probability">
+            <span id="radiant-bar" class="probability-fill radiant-fill"></span>
+            <span id="dire-bar" class="probability-fill dire-fill"></span>
+          </div>
+          <div class="probability-side dire-text"><span id="result-dire-name">Dire</span><strong id="dire-probability">50%</strong></div>
+        </div>
+        <div id="evidence" class="evidence-grid"></div>
+        <p class="result-disclaimer">Estimates reflect only the imported matches and names found in that data. Draft order, patch, player roles, and other in-game factors are not modeled.</p>
+      </section>
+
+      <footer><span>Built for better pre-game reads.</span><a href="README.md">Data format &amp; methodology</a></footer>
+    </main>
+  </body>
+</html>
